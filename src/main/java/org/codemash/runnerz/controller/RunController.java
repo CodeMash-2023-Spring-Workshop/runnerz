@@ -30,8 +30,8 @@ public class RunController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Run create(@RequestBody Run run) {
-        return runService.create(run);
+    public void create(@RequestBody Run run) {
+        runService.create(run);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -49,5 +49,6 @@ public class RunController {
     @GetMapping("/filter/{title}")
     public List<Run> filterByTitleStartsWith(@PathVariable String title) {
         return findAll().stream().filter(run -> run.title().startsWith(title)).collect(Collectors.toList());
-    }
+     }
+
 }
