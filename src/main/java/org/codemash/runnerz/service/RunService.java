@@ -14,6 +14,7 @@ import java.util.List;
 @Service
 public class RunService {
 
+
     private static final Logger log = LoggerFactory.getLogger(RunService.class);
     private final JdbcTemplate jdbcTemplate;
 
@@ -29,10 +30,7 @@ public class RunService {
             Location.valueOf(rs.getString("location")));
 
     public List<Run> findAll() {
-        String sql = """
-            SELECT id,title,started_on,completed_on,miles,location 
-            from Run
-        """;
+        String sql = "SELECT id,title,started_on,completed_on,miles,location from Run";
         return jdbcTemplate.query(sql,rowMapper);
     }
 
