@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/runs")
@@ -30,14 +29,14 @@ public class RunController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Run create(@RequestBody Run run) {
-        return runService.create(run);
+    public void create(@RequestBody Run run) {
+        runService.create(run);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
     public void update(@RequestBody Run run, @PathVariable Integer id) {
-        runService.update(run,id);
+        runService.update(run, id);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -46,8 +45,5 @@ public class RunController {
         runService.delete(id);
     }
 
-    @GetMapping("/filter/{title}")
-    public List<Run> filterByTitleStartsWith(@PathVariable String title) {
-        return findAll().stream().filter(run -> run.title().startsWith(title)).collect(Collectors.toList());
-    }
+
 }
