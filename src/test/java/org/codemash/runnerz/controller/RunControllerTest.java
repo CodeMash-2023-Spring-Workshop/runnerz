@@ -103,8 +103,10 @@ class RunControllerTest {
 
     @Test
     public void shouldFilterByTitleStarsWith() throws  Exception {
+        when(repository.findRunsByTitleStartingWith(ArgumentMatchers.anyString())).thenReturn(runs);
         mvc.perform(get("/api/runs/filter/title-starts-with/Monday"))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()", is(1)));
     }
 
 }
