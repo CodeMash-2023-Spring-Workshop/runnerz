@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/runs")
@@ -25,8 +26,8 @@ public class RunController {
     }
 
     @GetMapping("/{id}")
-    public Run findById(@PathVariable Integer id) {
-        return runRepository.findById(id).orElseThrow(RuntimeException::new);
+    public Optional<Run> findById(@PathVariable Integer id) {
+        return runRepository.findById(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -44,7 +45,8 @@ public class RunController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
-        runRepository.delete(runRepository.findById(id).orElseThrow(RuntimeException::new));
+        Optional<Run> run = runRepository.findById(id);
+        run.ifPresent(runRepository::delete);
     }
 
     @GetMapping("/filter/title-starts-with/{title}")
