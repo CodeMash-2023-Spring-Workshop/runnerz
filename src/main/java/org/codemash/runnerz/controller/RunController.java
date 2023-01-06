@@ -5,6 +5,7 @@ import org.codemash.runnerz.model.Run;
 import org.codemash.runnerz.repository.RunRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,8 +27,12 @@ public class RunController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Run> findById(@PathVariable Integer id) {
-        return runRepository.findById(id);
+    public Run findById(@PathVariable Integer id) {
+        Optional<Run> run = runRepository.findById(id);
+        if(run.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Run not found.");
+        }
+        return run.get();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
