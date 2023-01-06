@@ -1,5 +1,6 @@
 package org.codemash.runnerz.controller;
 
+import jakarta.validation.Valid;
 import org.codemash.runnerz.model.Location;
 import org.codemash.runnerz.model.Run;
 import org.codemash.runnerz.repository.RunRepository;
@@ -37,13 +38,13 @@ public class RunController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public void create(@RequestBody Run run) {
+    public void create(@Valid @RequestBody Run run) {
         runRepository.save(run);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
-    public void update(@RequestBody Run run, @PathVariable Integer id) {
+    public void update(@Valid @RequestBody Run run, @PathVariable Integer id) {
         runRepository.save(run);
     }
 
